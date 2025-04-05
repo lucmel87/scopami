@@ -1,0 +1,729 @@
+.game-wrapper,
+body {
+    flex-direction: column
+}
+
+*,
+body {
+    padding: 0;
+    margin: 0
+}
+
+*,
+body,
+h1 {
+    margin: 0
+}
+
+*,
+.game-wrapper {
+    box-sizing: border-box
+}
+
+#game-container,
+.game-wrapper,
+body {
+    height: 100vh;
+    display: flex
+}
+
+.card,
+header {
+    text-align: center
+}
+
+.card,
+body {
+    overflow: hidden
+}
+
+body {
+    font-family: Montserrat, sans-serif;
+    background: linear-gradient(135deg, #1e5f55, #2a9d8f, #1e5f55);
+    color: #f8f9fa;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    padding: 10px 0
+}
+
+h1 {
+    font-family: Cinzel, serif;
+    font-size: 2.5rem;
+    color: #f8d568;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+    letter-spacing: 2px;
+}
+
+.game-wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.separator {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f8d568, transparent);
+    margin: 10px auto;
+    width: 60%;
+}
+
+#game-container {
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    justify-content: space-around;
+}
+
+.opponent-area,
+.player-area {
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+
+.player-area {
+    position: fixed;
+    bottom: 10px
+}
+
+.opponent-area {
+    height: 15vh;
+    top: 10vh;
+    position: absolute
+}
+
+.cpu-main-box {
+    display: flex;
+}
+
+.cpu-hand {
+    width: 240px;
+    height: 120px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+/* Disposizione carte CPU */
+
+.cpu-hand .card:nth-child(1) {
+    left: 10%;
+    transform: rotate(-15deg);
+    z-index: 1;
+}
+
+.cpu-hand .card:nth-child(2) {
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.cpu-hand .card:nth-child(3) {
+    left: 57%;
+    transform: rotate(15deg);
+    z-index: 1;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.captures-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 12px;
+    color: #fff;
+}
+
+.card {
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(135deg, #fff, #f0f0f0);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #333;
+    margin: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 4px;
+}
+
+/* Carte CPU */
+.cpu-hand-box {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.cpu-hand .card {
+    position: absolute;
+    top: 0;
+    transform-origin: center bottom;
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(45deg, #4caf50, #4d4d4d, #8bc34a, #cddc39);
+    background-size: 200% 200%;
+    animation: gradientShift 5s ease infinite;
+    border-radius: 8px;
+    border-radius: 10px;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.cpu-hand>.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+/* Carte Giocatore */
+#player-hand .card {
+    cursor: pointer;
+    transform-origin: center bottom;
+}
+
+#player-hand .card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #fff7d1, #ffe066);
+}
+
+/* Pannello delle impostazioni */
+.settings-panel {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings-panel h2 {
+    font-family: 'Cinzel', serif;
+    color: #f8d568;
+    margin-top: 0;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #f8d568;
+}
+
+.checkbox input[type="checkbox"] {
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.checkbox label {
+    float: left;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px 0px 8px 5px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(248, 213, 104, 0.5);
+}
+
+.btn-start {
+    background: linear-gradient(135deg, #e76f51, #d62828);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 8px;
+}
+
+.btn-start:hover {
+    background: linear-gradient(135deg, #d62828, #e76f51);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+#game-info {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+/* Area di gioco */
+.game-board {
+    display: none;
+    /* Inizialmente nascosta, mostrata via JavaScript */
+}
+
+
+.info-display {
+    padding: 3px;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+}
+
+h3 {
+    font-family: 'Cinzel', serif;
+    color: #f8d568;
+    margin: 12px 0 8px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.table-area {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+    padding: 20px;
+    width: 100%;
+}
+
+
+
+.capture-highlight {
+    animation: highlight 0.8s ease-in-out;
+    border: 2px solid #f8d568;
+    box-shadow: 0 0 12px #f8d568;
+}
+
+@keyframes highlight {
+    0% {
+        box-shadow: 0 0 0 #f8d568;
+    }
+
+    50% {
+        box-shadow: 0 0 15px #f8d568;
+    }
+
+    100% {
+        box-shadow: 0 0 0 #f8d568;
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+/* Popup Scopa */
+.scopa-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #f8d568, #f1a43c);
+    color: #8b0000;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    font-size: 0;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+    border: 3px solid #8b0000;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        opacity 0.3s ease,
+        font-size 0.5s ease;
+}
+
+.scopa-popup.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    font-size: 40px;
+}
+
+.scopa-message {
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 0 12px;
+}
+
+.scopa-star {
+    color: #8b0000;
+    font-size: 32px;
+    animation: starPulse 0.8s infinite alternate;
+}
+
+.left-star {
+    margin-right: 12px;
+    animation-delay: 0.1s;
+}
+
+.right-star {
+    margin-left: 12px;
+    animation-delay: 0.4s;
+}
+
+@keyframes starPulse {
+    0% {
+        transform: scale(0.8) rotate(-5deg);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 1;
+    }
+}
+
+.scopa-popup.show::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, rgba(255, 215, 0, 0) 70%);
+    border-radius: 20px;
+    z-index: -1;
+    animation: glowing 1.5s infinite alternate;
+}
+
+@keyframes glowing {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/** stili popup selezione multipla */
+#capture-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-content {
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid darkgreen;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 95%;
+    background: linear-gradient(135deg, #1e5f55, #2a9d8f, #1e5f55);
+}
+
+.popup-content h3 {
+    color: #FFF;
+}
+
+#popup-choices button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+#popup-choices button:hover {
+    background: #0056b3;
+}
+
+.presa-multipla:hover {
+    box-shadow: 0px 0px 10px 5px rgba(190, 206, 19, 0.6);
+    /* Effetto bagliore */
+    filter: brightness(1.1);
+    /* Rende il div leggermente più luminoso */
+}
+
+.presa-multipla {
+    cursor: pointer;
+    float: left;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ffffff9c;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    padding: 0px;
+    transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.presa-multipla>.card {
+    cursor: pointer;
+    float: left;
+    margin-left: 10px;
+    transform: scale(90%);
+}
+
+/** fine stili popup seleziona multipla */
+
+/* Stile per il popup di riepilogo della mano */
+#recap-game-hand {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: #fff9e6;
+    border: 4px solid #e0bc6f;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    max-width: 90%;
+    width: 400px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: #5a3921;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#recap-game-hand.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#recap-game-hand h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed #e0bc6f;
+    color: #8b4513;
+    font-size: 1.5rem;
+}
+
+.recap-table-container {
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+.recap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.recap-table th,
+.recap-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e0bc6f;
+}
+
+.recap-table th {
+    background-color: #f5d897;
+    color: #8b4513;
+    font-weight: bold;
+}
+
+.recap-table tbody tr:nth-child(even) {
+    background-color: #fff3d6;
+}
+
+.recap-table tbody tr:nth-child(odd) {
+    background-color: #fffbf0;
+}
+
+.recap-table tbody tr:hover {
+    background-color: #f9e7b7;
+}
+
+.recap-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.recap-button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.playagain-button {
+    background-color: #ff7e67;
+    color: white;
+}
+.playagain-button:hover {
+    background-color: #e56e5a;
+    transform: translateY(-2px);
+}
+.next-button {
+    background-color: #6fc754;
+    color: white;
+}
+
+.next-button:hover {
+    background-color: #5dac47;
+    transform: translateY(-2px);
+}
+
+.close-button {
+    background-color: #ff7e67;
+    color: white;
+}
+
+.close-button:hover {
+    background-color: #e56e5a;
+    transform: translateY(-2px);
+}
+
+.winner-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #d4af37;
+    margin: 10px 0;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+#installBanner {
+    position: fixed;
+    top: -100px; /* Nasconde il banner inizialmente */
+    left: 0;
+    width: 100%;
+    background-color:  #2e7d32;
+    border-bottom: 2px solid #fbc02d;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: top 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1000;
+  }
+  
+  #installPWA {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  #installPWA:hover {
+    background: #388e3c;
+  }
+  
+  #closeBanner {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 10px;
+    color: #ffffff;
+  }
+  

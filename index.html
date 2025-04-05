@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scopati!</title>
+    <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Gioca a Scopa, il famoso gioco di carte italiano!">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("service-worker.js")
+                    .then((reg) => console.log("Service Worker registrato!", reg))
+                    .catch((err) => console.error("Errore Service Worker:", err));
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="game-wrapper">
+        <header id="game-title">
+            <h1>Scopati!</h1>
+            <div class="separator"></div>
+        </header>
+        <!-- Impostazioni della partita -->
+        <div id="game-settings" class="settings-panel">
+            <div id="installBanner">
+                <p>Installa Scopati per <strong>giocare offline</strong></p>
+                <button id="installPWA">Installa</button>
+                <span id="closeBanner">✖</span>
+            </div>
+            <h2>Impostazioni Partita</h2>
+            <div class="form-group">
+                <label for="player-name">Il tuo nome:</label>
+                <input id="player-name" type="text" placeholder="Inserisci il tuo nome" />
+            </div>
+
+            <div class="form-group">
+                <label for="max-players">Numero di giocatori:</label>
+                <select id="max-players">
+                    <option value="2">2 giocatori</option>
+                    <option value="3">3 giocatori</option>
+                    <option value="4">4 giocatori</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="max-punti">Punteggio vittoria:</label>
+                <select id="max-punti">
+                    <option value="9">9 punti</option>
+                    <option value="11">11 punti</option>
+                    <option value="21">21 punti</option>
+                </select>
+            </div>
+            <div class="form-group checkbox">
+                <input id="show-information" type="checkbox" id="show-information" />
+                <label for="show-information">Mostra informazioni di gioco</label>
+            </div>
+
+            <button id="start-game" class="btn-start">Inizia Partita</button>
+        </div>
+        <!-- Area Informazioni di Gioco -->
+        <div id="game-info">
+            <div id="hand-number" class="info-display"></div>
+            <div id="hand-message" class="info-display"></div>
+        </div>
+        <div id="game-container">
+            <div id="recap-game-hand"></div>
+            <!-- Tavolo di gioco -->
+            <div class="game-board">
+                <!-- Area Avversario -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let deferredPrompt;
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            // Mostra il banner scorrevole
+            const banner = document.getElementById("installBanner");
+            banner.style.top = "0";
+            // Click sul pulsante di installazione
+            document.getElementById("installPWA").addEventListener("click", () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === "accepted") {
+                        console.log("PWA installata!");
+                        banner.style.top = "-100px"; // Nasconde il banner dopo l'installazione
+                    }
+                    deferredPrompt = null;
+                });
+            });
+
+            // Pulsante per chiudere il banner
+            document.getElementById("closeBanner").addEventListener("click", () => {
+                banner.style.top = "-100px";
+            });
+        });
+
+        // Nasconde il banner se la PWA è già installata
+        window.addEventListener("appinstalled", () => {
+            document.getElementById("installBanner").style.top = "-100px";
+        });
+    </script>
+    <script type="module" src="Scopa.js"></script>
+</body>
+
+</html>
